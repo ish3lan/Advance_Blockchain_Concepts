@@ -12,6 +12,7 @@ contract ExerciseC6A {
         bool isAdmin;
     }
 
+    bool private operational;                       // variable to specify if the contract is operational or paused
     address private contractOwner;                  // Account used to deploy contract
     mapping(address => UserProfile) userProfiles;   // Mapping for storing user profiles
 
@@ -28,11 +29,12 @@ contract ExerciseC6A {
     *      The deploying account becomes contractOwner
     */
     constructor
-                                (
-                                ) 
-                                public 
+    (
+        ) 
+    public 
     {
         contractOwner = msg.sender;
+        operational = true;
     }
 
     /********************************************************************************************/
@@ -51,9 +53,27 @@ contract ExerciseC6A {
         _;
     }
 
+    modifier requireIsOperational(){
+        require(operational == true, "This contract is not operational.");
+        _;
+
+    }
+
     /********************************************************************************************/
     /*                                       UTILITY FUNCTIONS                                  */
     /********************************************************************************************/
+
+    /**
+     * @dev        Pause Contract Operation
+     */
+     function pauseContract()
+     external
+     requireContractOwner
+     requireIsOperational
+     {
+        operational = false;
+    }
+
 
    /**
     * @dev Check if a user is registered
@@ -61,12 +81,12 @@ contract ExerciseC6A {
     * @return A bool that indicates if the user is registered
     */   
     function isUserRegistered
-                            (
-                                address account
-                            )
-                            external
-                            view
-                            returns(bool)
+    (
+        address account
+        )
+    external
+    view
+    returns(bool)
     {
         require(account != address(0), "'account' must be a valid address.");
         return userProfiles[account].isRegistered;
@@ -77,19 +97,20 @@ contract ExerciseC6A {
     /********************************************************************************************/
 
     function registerUser
-                                (
-                                    address account,
-                                    bool isAdmin
-                                )
-                                external
-                                requireContractOwner
+    (
+        address account,
+        bool isAdmin
+        )
+    external
+    requireIsOperational
+    requireContractOwner
     {
         require(!userProfiles[account].isRegistered, "User is already registered.");
 
         userProfiles[account] = UserProfile({
-                                                isRegistered: true,
-                                                isAdmin: isAdmin
-                                            });
+            isRegistered: true,
+            isAdmin: isAdmin
+            });
     }
 }
 
