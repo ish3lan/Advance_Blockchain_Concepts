@@ -1,16 +1,16 @@
 {
-  "name": "blockchain-day1",
+  "name": "Advance_Blockchain_Concepts",
   "version": "1.0.0",
   "description": "",
   "directories": {
     "test": "test"
   },
-  "repository": "https://github.com/techbubble/blockchain-day1",
+  "repository": "https://github.com/ish3lan/Advance_Blockchain_Concepts",
   "license": "MIT",
   "scripts": {
     "test": "truffle test test/ExerciseC6A.js"
   },
-  "author": "Nik Kalyani <nik@kalyani.com> https://www.kalyani.com",
+  "authors": ["Nik Kalyani <nik@kalyani.com> https://www.kalyani.com", "Mohammed alshaalan @imsh3lan"],
   "devDependencies": {
     "truffle": "^4.1.14",
     "truffle-hdwallet-provider": "^0.0.5"
